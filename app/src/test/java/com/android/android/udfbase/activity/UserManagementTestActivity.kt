@@ -33,8 +33,8 @@ class UserManagementTestActivity(var users: List<TestUser> = getAllUsers(testApp
         return false
     }
 
-    override fun onError(error: ApiError?) {
-        this.error = error
+    override fun onError(action: BaseAction) {
+        this.error = action.getError()
     }
 
     fun addUser(name: String, age: Int, email: String) {

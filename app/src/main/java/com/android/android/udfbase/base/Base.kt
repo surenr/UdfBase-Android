@@ -43,7 +43,7 @@ interface  Base <T>: StoreSubscriber<UdfBaseState<T>> {
                     hideLoader()
                 appStore.dispatch(RemoveStateStatus.Perform(actionId, getActionId()))
             } else if (action.status == ActionStatus.ERROR) {
-                onError(action.getError())
+                onError(action)
                 hideLoader()
                 appStore.dispatch(RemoveStateStatus.Perform(actionId, getActionId()))
             }
@@ -51,5 +51,5 @@ interface  Base <T>: StoreSubscriber<UdfBaseState<T>> {
     }
 
     fun onStateUpdate(state: UdfBaseState<T>, action: BaseAction): Boolean
-    fun onError(error: ApiError?)
+    fun onError(action: BaseAction)
 }

@@ -33,8 +33,7 @@ fun addNewTestUserReducer(
                val newUsersList = getAllUsers(state).toMutableList()
                newUsersList.add(data.testUser)
                val newAppState = state.state.copy(users = newUsersList, count = newUsersList.count())
-               val localState = state.copy(state = newAppState)
-               return updateActionsStateStatus(localState, action.getId(), AddTestUser.Success(action.getId()!!))
+               return updateActionsStateStatus(state, action.getId(), AddTestUser.Success(action.getId()!!), newAppState)
           }
           is AddTestUser.Failure -> {
                val data = action as AddTestUser.Failure
@@ -53,8 +52,7 @@ fun removeTestUserReducer(
                val data = action as RemoveTestUser.Perform
                val newUsersList = getAllUsers(state).filter { user -> user.email != data.email }
                val newAppState = state.state.copy(users = newUsersList, count = newUsersList.count())
-               val localState = state.copy(state = newAppState)
-               return updateActionsStateStatus(localState, action.getId(), RemoveTestUser.Success(action.getId()!!))
+               return updateActionsStateStatus(state, action.getId(), RemoveTestUser.Success(action.getId()!!), newAppState)
           }
           is RemoveTestUser.Failure -> {
                val data = action as RemoveTestUser.Failure
@@ -71,8 +69,7 @@ fun removeAllTestUsersReducer(
      when(action as RemoveAllUsers) {
           is RemoveAllUsers.Perform -> {
                val newAppState = state.state.copy(users = listOf(), count = 0)
-               val localState = state.copy(state = newAppState)
-               return updateActionsStateStatus(localState, action.getId(), RemoveAllUsers.Success(action.getId()!!))
+               return updateActionsStateStatus(state, action.getId(), RemoveAllUsers.Success(action.getId()!!), newAppState)
           }
           is RemoveAllUsers.Failure -> {
                val data = action as RemoveAllUsers.Failure

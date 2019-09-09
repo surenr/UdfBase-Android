@@ -10,16 +10,20 @@ import org.rekotlin.Reducer
 typealias ReducerHandler<T> = (Action, UdfBaseState<T>) -> UdfBaseState<T>
 internal typealias ReducerType<T> = (Action, UdfBaseState<T>?) -> UdfBaseState<T>
 
-fun <T> updateActionsStateStatus(state: UdfBaseState<T>, actionId: String?, action: BaseAction): UdfBaseState<T> {
+fun <T> updateActionsStateStatus(state: UdfBaseState<T>, actionId: String?, action: BaseAction, localState: T? = null): UdfBaseState<T> {
+    var stateToReturn = state
+    if(localState != null) {
+        stateToReturn = state.copy(state = localState)
+    }
     if(actionId != null) {
-        val statusMap = state.systemStateUpdateTracker
+        val statusMap = stateToReturn.systemStateUpdateTracker
             .toMutableMap()
             .filterKeys { it != actionId }
             .toMutableMap()
         statusMap[actionId] = action
-        return state.copy(systemStateUpdateTracker = statusMap.toMap())
+        return stateToReturn.copy(systemStateUpdateTracker = statusMap.toMap())
     }
-    return state
+    return stateToReturn
 }
 
 //fun <T> appReducers(stateInstance: T, action: Action, state: UdfBaseState<T>?, handler: ReducerHandler<T>): UdfBaseState<T> {

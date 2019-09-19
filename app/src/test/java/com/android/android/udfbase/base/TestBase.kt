@@ -17,4 +17,8 @@ import java.util.ArrayList
      override fun hideLoader() {
          // Do nothing for test base class
      }
+
+     override fun onRawStateUpdate(state: UdfBaseState<TestState>) {
+         // Do nothing for test base class
+     }
 }

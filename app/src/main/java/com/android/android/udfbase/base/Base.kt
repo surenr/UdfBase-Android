@@ -32,6 +32,7 @@ interface  Base <T>: StoreSubscriber<UdfBaseState<T>> {
     fun hideLoader()
 
     override fun newState(state: UdfBaseState<T>) {
+        this.onRawStateUpdate(state)
         val ids: ArrayList<String> = this.actionSessionIds.clone() as ArrayList<String>
         ids.forEach { updateActivity(state, it) }
     }
@@ -51,5 +52,6 @@ interface  Base <T>: StoreSubscriber<UdfBaseState<T>> {
     }
 
     fun onStateUpdate(state: UdfBaseState<T>, action: BaseAction): Boolean
+    fun onRawStateUpdate(state: UdfBaseState<T>)
     fun onError(action: BaseAction)
 }

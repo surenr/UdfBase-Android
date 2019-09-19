@@ -2,7 +2,6 @@ package com.android.android.udfbase.base
 
 import com.android.android.udfbase.actions.BaseAction
 import com.android.android.udfbase.actions.RemoveStateStatus
-import com.android.android.udfbase.domain.ApiError
 import com.android.android.udfbase.state.ActionStatus
 import com.android.android.udfbase.state.UdfBaseState
 import com.android.android.udfbase.state.getStateFlowStatusBySession

@@ -38,14 +38,13 @@ interface  Base <T>: StoreSubscriber<UdfBaseState<T>> {
 
     private fun updateActivity(state: UdfBaseState<T>, actionId: String) {
         getStateFlowStatusBySession(state, actionId)?.let { action ->
+            appStore.dispatch(RemoveStateStatus.Perform(actionId, getActionId()))
             if (action.status == ActionStatus.COMPLETED) {
                 if (onStateUpdate(state, action))
                     hideLoader()
-                appStore.dispatch(RemoveStateStatus.Perform(actionId, getActionId()))
             } else if (action.status == ActionStatus.ERROR) {
                 onError(action)
                 hideLoader()
-                appStore.dispatch(RemoveStateStatus.Perform(actionId, getActionId()))
             }
         }
     }
